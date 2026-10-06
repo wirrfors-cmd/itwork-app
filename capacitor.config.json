@@ -1,0 +1,11 @@
+{
+  "appId": "ru.itwork.app",
+  "appName": "Учёт работ",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "ios": {
+    "preferredLang": "ru"
+  }
+}

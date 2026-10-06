@@ -1,0 +1,21 @@
+{
+  "name": "itwork-app",
+  "version": "1.0.0",
+  "description": "Учёт работ и накладных для iPhone и Android",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "cap": "capacitor"
+  },
+  "dependencies": {
+    "@capacitor/app": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/ios": "^8.5.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.0.0",
+    "vite": "^5.0.0"
+  }
+}
