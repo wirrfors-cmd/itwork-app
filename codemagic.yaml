@@ -5,7 +5,7 @@ workflows:
     instance_type: mac_mini_m1
 
     environment:
-      node: 18.17.0
+      node: latest
 
     scripts:
       - name: Install dependencies
@@ -19,6 +19,7 @@ workflows:
 
       - name: Sync Capacitor
         script: |
+          if [ ! -d "ios" ]; then npx cap add ios; fi
           npx cap sync ios
 
       - name: Build iOS app
