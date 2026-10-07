@@ -5,11 +5,6 @@ workflows:
     instance_type: mac_mini_m1
 
     environment:
-      ios_signing:
-        provisioning_profiles:
-          - reference: itwork_provisioning_profile
-        certificates:
-          - reference: ios_distribution_certificate
       xcode: 15.2
       node: 18.17.0
 
