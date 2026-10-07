@@ -1,8 +1,8 @@
 workflows:
   ios-workflow:
     name: iOS Build
-    max_build_duration: 120
-    instance_type: mac_mini_m1
+    max_build_duration: 60
+    instance_type: mac_mini_m2
 
     environment:
       node: latest
@@ -11,7 +11,6 @@ workflows:
       - name: Install dependencies
         script: |
           npm install
-          npm install -g @capacitor/cli
 
       - name: Build web assets
         script: |
@@ -22,30 +21,21 @@ workflows:
           if [ ! -d "ios" ]; then npx cap add ios; fi
           npx cap sync ios
 
-      - name: Build iOS app
+      - name: Build iOS app (simulator, no signing)
         script: |
           cd ios/App
-          xcodebuild build -scheme App -workspace App.xcworkspace -configuration Release -derivedDataPath build
-
-      - name: Build IPA
-        script: |
-          cd ios/App
-          xcodebuild -workspace App.xcworkspace \
+          if [ -d App.xcworkspace ]; then
+            TARGET="-workspace App.xcworkspace"
+          else
+            TARGET="-project App.xcodeproj"
+          fi
+          xcodebuild build $TARGET \
             -scheme App \
-            -configuration Release \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath build \
-            -archivePath "build/App.xcarchive" \
-            archive
-
-          xcodebuild -exportArchive \
-            -archivePath "build/App.xcarchive" \
-            -exportOptionsPlist "exportOptions.plist" \
-            -exportPath "build/ipa" \
-            -allowProvisioningUpdates
-
-    artifacts:
-      - ios/App/build/ipa/**/*.ipa
-      - ios/App/build/App.xcarchive
+            CODE_SIGNING_ALLOWED=NO
 
     publishing:
       email:
